@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+# Pass arguments through to another command
+gh issue comment "$@" -b "Finished in $(git rev-parse HEAD)."
+gh issue close "$@"
