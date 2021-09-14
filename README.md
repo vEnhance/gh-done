@@ -12,3 +12,7 @@ Trivial wrapper which closes an issue and adds a comment "Finished in `...`.".
 
 In general, the arguments after the first can be any arguments (even more than one)
 accepted by `git rev-parse`.
+
+By default, the script will show the issue and the commit before sending the
+bits off into the internets. Pass `--quiet` before any other argument to stop
+this behavior (or pipe `yes`).
