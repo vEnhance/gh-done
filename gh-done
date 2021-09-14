@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
-# Pass arguments through to another command
-gh issue comment --body "Finished in $(git rev-parse HEAD)." $@
-gh issue close $@
+if [ "$#" = 0 ]; then
+	echo "You need to specify which issue you want to close."
+elif [ "$#" = 1 ]; then
+	gh issue comment --body "Finished in $(git rev-parse HEAD)." $@
+	gh issue close $@
+else
+	issue_id=$1
+	shift
+	gh issue comment --body "Finished in $(git rev-parse $@)." $issue_id
+	gh issue close $issue_id
+fi
