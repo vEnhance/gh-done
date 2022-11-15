@@ -3,31 +3,31 @@ set -eou pipefail
 
 # get data
 if [ "$#" = 0 ]; then
-	echo "You need to specify which issue you want to close."
-	exit 1
+  echo "You need to specify which issue you want to close."
+  exit 1
 fi
 if [ "$1" = "--quiet" ]; then
-	quiet=1
-	shift
+  quiet=1
+  shift
 else
-	quiet=0
+  quiet=0
 fi
 
 if [ "$#" = 1 ]; then
-	issue_id=$@
-	commit_args=HEAD
+  issue_id=$@
+  commit_args=HEAD
 else
-	issue_id=$1
-	shift
-	commit_args=$@
+  issue_id=$1
+  shift
+  commit_args=$@
 fi
 
 # confirm user isn't dumby
 if [ $quiet = 0 ]; then
-	git show --no-patch $commit_args
-	echo "......................................."
-	gh issue view $issue_id
-	read -p "Press enter to continue, ^C to abort. "
+  git show --no-patch $commit_args
+  echo "......................................."
+  gh issue view $issue_id
+  read -p "Press enter to continue, ^C to abort. "
 fi
 
 gh issue comment --body "Finished in $(git rev-parse $commit_args)." $issue_id
